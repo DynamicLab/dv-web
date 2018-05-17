@@ -12,4 +12,4 @@ WORKDIR $DEV_HOME
 # run npm install at CMD level, so that we don't need to build new images again and again
 CMD cd app && \
     npm install --quiet &&\
-    npm start debug
+    npm start
