@@ -56,7 +56,7 @@ create_network(){
 start_app(){
     if [[ -z "$(docker ps -aqf "name=${REPO_NAME}")" ]]; then
         echo "${INFO}Start ${REPO_NAME}..." &&\
-        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p 3000:3000 --network ${NETWORK_NAME} ${IMAGE_NAME}
+        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p 3001:3001 --network ${NETWORK_NAME} ${IMAGE_NAME}
     else
         echo "${INFO}${REPO_NAME} is already up...${END}"
     fi
@@ -69,7 +69,7 @@ run_cli(){
         docker exec -it ${REPO_NAME} ash
     else
         echo "${INFO}create a empheral container to access cli...${END}"
-        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p 3000:3000 --network ${NETWORK_NAME} ${IMAGE_NAME} ash
+        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p 3001:3001 --network ${NETWORK_NAME} ${IMAGE_NAME} ash
     fi
 }
 
