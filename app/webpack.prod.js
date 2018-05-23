@@ -8,18 +8,12 @@ module.exports = {
   devtool: 'source-map',
   entry: './src/index.js',
   output: {
-    // We want to create the JavaScript bundles under a
+    // Create the JavaScript bundles under a
     // 'static' directory
     filename: 'static/bundle.[hash].js',
 
     // Absolute path to the desired output directory. In our
     //case a directory named 'dist'
-    // '__dirname' is a Node variable that gives us the absolute
-    // path to our current directory. Then with 'path.resolve' we
-    // join directories
-    // Webpack 4 assumes your output path will be './dist' so you
-    // can just leave this
-    // entry out.
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
@@ -33,7 +27,6 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        // We configure 'Extract Text Plugin'
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader"
