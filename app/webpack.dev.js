@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    inline:true,
+    inline: true,
     port: port
   },
   entry: './src/index.js',
@@ -15,18 +15,19 @@ module.exports = {
     filename: 'bundle.[hash].js'
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader',
+          options: {
+            presets: ['env','react']
+          }
         }
       },
       {
         test: /\.css$/,
-        use: [
-          {
+        use: [{
             loader: 'style-loader'
           },
           {
