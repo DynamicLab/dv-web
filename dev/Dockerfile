@@ -9,6 +9,10 @@ ARG DEV_HOME
 
 WORKDIR $DEV_HOME
 
+# Install build dependencies
+RUN apk update \
+    && apk add --no-cache build-base libpng-dev bash
+
 # run npm install at CMD level, so that we don't need to build new images again and again
 CMD cd app && \
     npm install --quiet &&\
