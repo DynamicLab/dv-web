@@ -87,6 +87,15 @@ function getSuggestions(value) {
       });
 }
 
+function checkAirportInList(value){
+  for(var i=0; i<suggestions.length; i++){
+    if(suggestions[i].label.toLowerCase() === value.toLowerCase()){
+      return true;
+    }
+  }
+  return false;
+}
+
 const styles = theme => ({
   container: {
     flexGrow: 1,
@@ -132,7 +141,9 @@ class IntegrationAutosuggest extends React.Component {
     this.setState({
       value: newValue,
     });
-    this.props.setAirport(newValue);
+    if (checkAirportInList(newValue)) {
+      this.props.setAirport(newValue);
+    }
   };
 
   render() {

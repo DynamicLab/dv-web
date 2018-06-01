@@ -27,7 +27,7 @@ export class DashBoard extends Component {
                 {/* search bar */}
                 <Grid container spacing={8} direction="column" justify="center" alignment="center">
                     <Grid container item spacing={0} justify="center">
-                        <Grid item xs={10}>
+                        <Grid item xs={4}>
                             <SearchBar setAirport={this.setAirport} />
                         </Grid>
                     </Grid>
