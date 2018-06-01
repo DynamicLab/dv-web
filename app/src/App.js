@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import style from './App.css';
 import {Title} from './component/title/Title';
 import SearchBar from './component/searchbar/SearchBar';
 import {airports} from './data/Airports';
+import Grid from '@material-ui/core/Grid';
 
 class App extends Component {
-  state={airports:''}
+  state={airports:'YOW'}
 
   setAirport = (state) => {
     this.setState({airports:state});
@@ -16,16 +16,26 @@ class App extends Component {
   render() {
     console.log(airports);
     return (
-      <div className={style.App}>
-        <Title title={this.state.airports} />
-        <header className={style.AppHeader}>
-          <img src={logo} className={style.AppLogo} alt="logo" />
-          <h1 className={style.AppTitle}>Welcome to React</h1>
-        </header>
-        <p className={style.AppIntro}>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <SearchBar setAirport={this.setAirport}/>
+      <div>
+        <Grid container>
+          <Grid item xs={2} spacing={8}/>
+          <Grid item xs={2}>
+            <Title title={this.state.airports} />
+          </Grid>
+          <Grid item xs={2} spacing={8}/>
+          <Grid item xs={2} spacing={8}/>
+          <Grid item xs={2} spacing={8}/>
+          <Grid item xs={2} spacing={8}/>
+        </Grid>
+        <div style={{ display: 'flex', margin: 40, background: 'red'}}>
+          <Grid container spacing={24} direction="column" justify="center">
+            <Grid container item spacing={0} justify="center">
+              <Grid item xs={4}>
+                <SearchBar setAirport={this.setAirport}/>
+              </Grid>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }
