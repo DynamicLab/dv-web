@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropsTypes from 'prop-types';
 
 export class Title extends Component{
     constructor(props){
@@ -13,3 +14,7 @@ export class Title extends Component{
         )
     }
 }
+
+Title.propsTypes = {
+    title: PropsTypes.string.isRequired
+} 
