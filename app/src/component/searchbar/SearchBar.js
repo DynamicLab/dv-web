@@ -155,7 +155,7 @@ class IntegrationAutosuggest extends React.Component {
         renderSuggestion={renderSuggestion}
         inputProps={{
           classes,
-          placeholder: 'Search a country (start with a)',
+          placeholder: 'Search an airport (start with Y)',
           value: this.state.value,
           onChange: this.handleChange,
         }}
