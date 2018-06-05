@@ -99,8 +99,7 @@ function checkAirportInList(value){
 const styles = theme => ({
   container: {
     flexGrow: 1,
-    position: 'relative',
-    height: 250,
+    position: 'relative'
   },
   suggestionsContainerOpen: {
     position: 'absolute',
@@ -137,18 +136,30 @@ class IntegrationAutosuggest extends React.Component {
     });
   };
 
-  handleChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue,
-    });
-    if (checkAirportInList(newValue)) {
-      this.props.setAirport(newValue);
+  handleChange = (event, { newValue, method }) => {
+    if (method == 'type') {
+      this.setState({
+        value: newValue,
+      });
     }
+  };
+
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      if (checkAirportInList(this.state.value)) {
+        this.props.setAirport(this.state.value.toUpperCase());
+        this.state.value = '';
+      }
+    }
+  }
+
+  handleSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    this.props.setAirport(suggestionValue);
+    this.state.value = '';
   };
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.value);
     return (
       <Autosuggest
         theme={{
@@ -161,14 +172,16 @@ class IntegrationAutosuggest extends React.Component {
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+        onSuggestionSelected={this.handleSuggestionSelected}
         renderSuggestionsContainer={renderSuggestionsContainer}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={{
           classes,
-          placeholder: 'Search an airport (start with Y)',
+          placeholder: 'Search an airport',
           value: this.state.value,
           onChange: this.handleChange,
+          onKeyPress: this.handleKeyPress,
         }}
       />
     );

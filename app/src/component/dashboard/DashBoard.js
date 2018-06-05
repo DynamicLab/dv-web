@@ -9,7 +9,7 @@ export class DashBoard extends Component {
 
     setAirport = (state) => {
         this.setState({ airports: state });
-        console.log(`Print in App: ${state}`);
+        console.log(`Print in DashBoard: ${state}`);
     }
 
     render() {
@@ -25,14 +25,13 @@ export class DashBoard extends Component {
                 </Grid>
 
                 {/* search bar */}
-                <Grid container spacing={8} direction="column" justify="center" alignment="center">
-                    <Grid container item spacing={0} justify="center">
+                <Grid container spacing={8} direction="column" justify="center" alignContent="center">
+                    <Grid container item spacing={0} justify="center" alignItems="center">
                         <Grid item xs={4}>
-                            <SearchBar setAirport={this.setAirport} />
+                            <SearchBar setAirport={this.setAirport}/>
                         </Grid>
                     </Grid>
                 </Grid>
-
             </div>
         )
     }
