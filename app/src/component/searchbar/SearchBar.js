@@ -148,14 +148,18 @@ class IntegrationAutosuggest extends React.Component {
     if (event.key === 'Enter') {
       if (checkAirportInList(this.state.value)) {
         this.props.setAirport(this.state.value.toUpperCase());
-        this.state.value = '';
+        this.setState({
+          value: '',
+        });
       }
     }
   }
 
   handleSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
     this.props.setAirport(suggestionValue);
-    this.state.value = '';
+    this.setState({
+      value: '',
+    });
   };
 
   render() {
