@@ -1,4 +1,4 @@
-#/bin/bash!
+#!/bin/bash
 
 # Color
 INFO='\033[38;5;29m'    # Dark Green
