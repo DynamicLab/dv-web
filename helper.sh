@@ -1,16 +1,17 @@
 #/bin/bash!
 
 # Color
-INFO='\033[32m'    # Green
-TIP='\033[34m'     # Blue
-ERROR='\033[31m'  # Red
-END='\033[39m'       # No Color
+INFO='\033[38;5;29m'    # Dark Green
+TIP='\033[38;5;25m'     # Ocean Blue
+ERROR='\033[38;5;124m'  # Red
+END='\033[0m'       # No Color
 
 # Virables
 REPO_NAME=dv-web
 IMAGE_NAME=${REPO_NAME}
 # To avoid interfere with other projects in the future, when using helper running up the service, give it a isolated network
 NETWORK_NAME=dv_web_network
+APP_PORT=3001
 
 # Text Block
 read -d '' instruction << EOM
@@ -65,7 +66,7 @@ create_network(){
 start_app(){
     if [[ -z "$(docker ps -aqf "name=${REPO_NAME}")" ]]; then
         echo -e "${INFO}Start ${REPO_NAME}..." &&\
-        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p 3001:3001 --network ${NETWORK_NAME} ${IMAGE_NAME}
+        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p ${APP_PORT}:${APP_PORT} --network ${NETWORK_NAME} ${IMAGE_NAME}
     else
         echo -e "${INFO}${REPO_NAME} is already up...${END}"
     fi
@@ -78,7 +79,7 @@ run_cli(){
         docker exec -it ${REPO_NAME} ash
     else
         echo -e "${INFO}create a empheral container to access cli...${END}"
-        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p 3001:3001 --network ${NETWORK_NAME} ${IMAGE_NAME} ash
+        docker run --rm -it --name ${REPO_NAME} -v $(pwd):$(pwd) -p ${APP_PORT}:${APP_PORT} --network ${NETWORK_NAME} ${IMAGE_NAME} ash
     fi
 }
 
@@ -98,8 +99,6 @@ stop_and_rm_container_if_running(){
 
 # Stop and remove all of the containers
 remove_all(){
-    echo -e "\n${INFO}Stop and remove all services...${END}\n"
-    echo -e "${INFO}Stop and remove ${REPO_NAME}...${END}" &&\
     stop_and_rm_container_if_running ${REPO_NAME}
 }
 
@@ -127,7 +126,7 @@ do
             echo -e "\n${INFO}Start ${REPO_NAME} with ES and Kibana...${END}"
             build_image_if_not_exist && \
             create_network && \
-            start_all
+            start_app
             ;;
         "${actions[2]}")
             remove_all
