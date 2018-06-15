@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { Title } from "../title/Title";
-import SearchBar from "../searchbar/SearchBar";
-import { airports } from "../../data/Airports";
+
 import WorldMap from "../worldmap/WorldMap";
 import { range } from "d3-array";
 import { scaleThreshold } from "d3-scale";
 import { geoCentroid } from "d3-geo";
 
 import worlddata from "../../data/World";
+import SearchPanel from "../searchpanel/SearchPanel";
+import "./DashBoard.css";
 
-const appdata = worlddata.features.filter(d => geoCentroid(d)[0] < -20);
+// const appdata = worlddata.features.filter(d => geoCentroid(d)[0] < -20);
+const appdata = worlddata.features;
 
 appdata.forEach((d, i) => {
   const offset = Math.random();
@@ -24,12 +24,12 @@ const colorScale = scaleThreshold()
 
 export class DashBoard extends Component {
   state = {
-    airports: "YOW",
-    screenWidth: 1000,
-    screenHeight: 500,
+    screenWidth: 900,
+    screenHeight:900,
     hover: "none",
     brushExtent: [0, 40]
   };
+
   onResize = this.onResize.bind(this);
   onHover = this.onHover.bind(this);
   onBrush = this.onBrush.bind(this);
@@ -54,11 +54,6 @@ export class DashBoard extends Component {
     this.onResize();
   }
 
-  setAirport = state => {
-    this.setState({ airports: state });
-    console.log(`Print in DashBoard: ${state}`);
-  };
-
   render() {
     const filteredAppdata = appdata.filter(
       (d, i) =>
@@ -66,42 +61,16 @@ export class DashBoard extends Component {
         d.launchday <= this.state.brushExtent[1]
     );
     return (
-      <div>
-        {/* title */}
-        <Grid container spacing={8}>
-          <Grid item xs={1} />
-          <Grid item xs>
-            <Title title={this.state.airports} />
-          </Grid>
-        </Grid>
-        
-        <Grid container spacing={8} justify="center" alignItems="center">
-          <Grid>
-          <WorldMap
+      <div className="dashboard">
+        <SearchPanel />
+        <br />
+        <WorldMap
             hoverElement={this.state.hover}
             onHover={this.onHover}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth / 2, this.state.screenHeight / 2]}
-          />
-          </Grid>
-        </Grid>
-
-        {/* search bar */}
-        <Grid
-          container
-          spacing={8}
-          direction="column"
-          justify="center"
-          alignContent="center"
-        >
-          <Grid container item spacing={0} justify="center" alignItems="center">
-            <Grid item xs={4}>
-              <SearchBar setAirport={this.setAirport} />
-            </Grid>
-          </Grid>
-        </Grid>
-        
+            size={[this.state.screenWidth, this.state.screenHeight]}
+          />  
       </div>
     );
   }
